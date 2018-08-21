@@ -1,0 +1,78 @@
+*** Settings ***
+Library           BuiltIn
+Library           SeleniumLibrary
+Library           AutoItLibrary
+Library           Screenshot
+Library           Collections
+Library           DatabaseLibrary
+Library           DateTime
+Library           String
+Library           RequestsLibrary
+Library           OperatingSystem
+Library           JSONLibrary
+Library           HttpLibrary.HTTP
+Library           SudsLibrary
+Library           SSHLibrary
+
+*** Test Cases ***
+Task 2 - Web
+    Open Browser    http://www.way2automation.com/angularjs-protractor/webtables/    googlechrome
+    ${currentURL}=    Get Location
+    Should Be Equal As Strings    ${currentURL}    http://www.way2automation.com/angularjs-protractor/webtables/
+    Maximize Browser Window
+    Click Button    Add User
+    Input Text    xpath://input[@name='FirstName']    FName1
+    Input Text    name = LastName    LName1
+    Input Text    name \ = UserName    User1
+    Input Password    name = Password    Pass1
+    Click Element    name = optionsRadios
+    Select From List    name = RoleId    Admin
+    Input Text    name = Email    admin@mail.com
+    Input Text    name = Mobilephone    082555
+    ${userName}=    Get Text    xpath = /html/body/div[3]/div[2]/form/table/tbody/tr[1]/td[2]/input
+    Log    ${userName}
+    Click Button    Save
+    Sleep    5
+    Comment    ${userName}=    Get Text    xpath = /html/body/table/tbody/tr[2]/td[3]
+    Comment    Log    ${userName}
+    Click Button    Add User
+    Sleep    2
+    Clear Element Text    xpath://input[@name='FirstName']
+    Clear Element Text    name = LastName
+    Clear Element Text    name \ = UserName
+    Clear Element Text    name = Password
+    Clear Element Text    name = Email
+    Clear Element Text    name = Mobilephone
+    Sleep    2
+    Input Text    xpath://input[@name='FirstName']    FName2
+    Input Text    name = LastName    LName2
+    Input Text    name \ = UserName    User2
+    Input Password    name = Password    Pass2
+    Click Element    xpath = /html/body/div[3]/div[2]/form/table/tbody/tr[5]/td[2]/label[2]
+    Select From List    name = RoleId    Customer
+    Input Text    name = Email    customer@mail.com
+    Input Text    name = Mobilephone    083444
+    Click Button    Save
+
+Task 1 - API
+    Create Session    dogs    https://dog.ceo/api    verify=True
+    ${resp}=    Get Request    dogs    /breeds/list/all
+    Log    ${resp.content}
+    Comment    Should Contain    ${resp.content}    retriever    retriever is within the list
+    ${breedCount}=    Get Count    ${resp.content}    retriever
+    log     Retriever was found    ${breedCount}
+    ${resp}=    Get Request    dogs    /breed/retriever/list
+    Log    ${resp.content}
+
+Check API
+    Create Session    dogs    https://dog.ceo/api    verify=True
+    ${resp}=    Get Request    dogs    /breeds/list/all
+    Log    ${resp.content}
+    Should Contain    ${resp.content}    retriever    retriever is within the list
+    ${breedCount}=    Get Count    ${resp.content}    retriever
+    log     ${breedCount}
+    ${subBreed}=    Get Request    dogs    /breed/retriever/list
+    Log    ${subBreed.content}
+    ${randomImage}=    Get Request    dogs    /breed/retriever/golden/images/random
+    Log    ${randomImage.content}
+    #/breeds/image/random/golden
