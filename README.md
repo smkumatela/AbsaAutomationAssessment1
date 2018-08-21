@@ -1,6 +1,7 @@
 # AbsaAutomationAssessment
 
 Overview
+
 This is a Selenium webdriver project that is written using Robot Framework (Ride), with the help of Selenium Library which enabled the running of tests
 The repository has all the code for both tasks, and the code will need to be imported into Robot Framework IDE in order to be able to run it
 Task 1 is the API tests
