@@ -54,16 +54,6 @@ Task 2 - Web
     Input Text    name = Mobilephone    083444
     Click Button    Save
 
-Task 1 - API
-    Create Session    dogs    https://dog.ceo/api    verify=True
-    ${resp}=    Get Request    dogs    /breeds/list/all
-    Log    ${resp.content}
-    Comment    Should Contain    ${resp.content}    retriever    retriever is within the list
-    ${breedCount}=    Get Count    ${resp.content}    retriever
-    log     Retriever was found    ${breedCount}
-    ${resp}=    Get Request    dogs    /breed/retriever/list
-    Log    ${resp.content}
-
 Check API
     Create Session    dogs    https://dog.ceo/api    verify=True
     ${resp}=    Get Request    dogs    /breeds/list/all
