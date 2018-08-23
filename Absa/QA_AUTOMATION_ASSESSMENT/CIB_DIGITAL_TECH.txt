@@ -61,16 +61,16 @@ Check API
     Create Session    dogs    https://dog.ceo/api    verify=True
     ${resp}=    Get Request    dogs    /breeds/list/all
     Log    ${resp.content}
-    Create File    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs.xml    ${resp.content}
+    Create File    C:\\Python27\\Absa\\AllBreeds.txt    ${resp.content}
     Should Contain    ${resp.content}    retriever    retriever is within the list
     ${breedCount}=    Get Count    ${resp.content}    retriever
-    log    ${breedCount}
+    Log Many    Retriever found =     ${breedCount}
     ${subBreed}=    Get Request    dogs    /breed/retriever/list
     Log    ${subBreed.content}
+    Comment    Create File    C:\\Python27\\Absa\\RetrieverCount    ${breedCount.content}
     ${randomImage}=    Get Request    dogs    /breed/retriever/golden/images/random
     Log    ${randomImage.content}
     ${currentDateTime}=    Get Current Date    result_format=%Y/%m/%d/%H.%M.%S
     Set Variable    ${currentDateTime}
-    Comment    ${file}=    -d --outputdir dir    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs
-    log    output
-    Create File    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs.csv    songezo, mkumatela, 1
+    Comment    ${file}=    -d --outputdir dir    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs    songezo, mkumatela, 1
+    Create File    C:\\Python27\\Absa\\SubBreeds.txt    ${subBreed.content}
