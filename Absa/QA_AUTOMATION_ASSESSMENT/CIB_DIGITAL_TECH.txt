@@ -13,6 +13,9 @@ Library           JSONLibrary
 Library           HttpLibrary.HTTP
 Library           SudsLibrary
 Library           SSHLibrary
+Library           CSVLibrary
+Library           XML
+Library           ExcelLibrary
 
 *** Test Cases ***
 Task 2 - Web
@@ -33,8 +36,6 @@ Task 2 - Web
     Log    ${userName}
     Click Button    Save
     Sleep    5
-    Comment    ${userName}=    Get Text    xpath = /html/body/table/tbody/tr[2]/td[3]
-    Comment    Log    ${userName}
     Click Button    Add User
     Sleep    2
     Clear Element Text    xpath://input[@name='FirstName']
@@ -53,16 +54,23 @@ Task 2 - Web
     Input Text    name = Email    customer@mail.com
     Input Text    name = Mobilephone    083444
     Click Button    Save
+    sleep    2
+    Close Browser
 
 Check API
     Create Session    dogs    https://dog.ceo/api    verify=True
     ${resp}=    Get Request    dogs    /breeds/list/all
     Log    ${resp.content}
+    Create File    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs.xml    ${resp.content}
     Should Contain    ${resp.content}    retriever    retriever is within the list
     ${breedCount}=    Get Count    ${resp.content}    retriever
-    log     ${breedCount}
+    log    ${breedCount}
     ${subBreed}=    Get Request    dogs    /breed/retriever/list
     Log    ${subBreed.content}
     ${randomImage}=    Get Request    dogs    /breed/retriever/golden/images/random
     Log    ${randomImage.content}
-    #/breeds/image/random/golden
+    ${currentDateTime}=    Get Current Date    result_format=%Y/%m/%d/%H.%M.%S
+    Set Variable    ${currentDateTime}
+    Comment    ${file}=    -d --outputdir dir    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs
+    log    output
+    Create File    C:\\Users\\smkumatela\\Documents\\TestReportsAndLogs.csv    songezo, mkumatela, 1
